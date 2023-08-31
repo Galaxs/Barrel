@@ -1,6 +1,6 @@
 # Compiler settings
 CXX := g++
-CXX_FLAGS := -Wall -Wextra -std=c++17 
+CXX_FLAGS := -Wall -Wextra -g -std=c++17 
 
 # Directories
 BIN := bin
@@ -12,7 +12,7 @@ LIB := C:\SFML\SFML_VSC\SFML-2.6.0/lib
 SFML_FLAGS:= SFML_STATIC  
 
 # SFML static libraries (STATICALLY COMPILATION)
-SFML_STATIC_LIBRARIES := -L$(LIB) -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lsfml-audio -lopengl32 -lfreetype -lwinmm -lgdi32 -mwindows
+SFML_STATIC_LIBRARIES := -L$(LIB) -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lsfml-audio -lopengl32 -lfreetype -lwinmm -lgdi32 
 
 # Source files
 SRCS := $(wildcard $(SRC)/*.cpp)
@@ -37,4 +37,4 @@ link: $(OBJS)
 	$(CXX) $(CXX_FLAGS) -o $(BIN)/$(EXECUTABLE) $^ $(SFML_STATIC_LIBRARIES)
 
 clean:
-	del /Q $(BIN)\*.*
+	rm  $(BIN)/*.*

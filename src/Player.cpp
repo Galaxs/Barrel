@@ -6,7 +6,7 @@ Player::Player(sf::RenderWindow& renderWindow)
     m_Position.y = VideoMode::getDesktopMode().height - 200;
     m_StartPos.y = m_Position.y;
     m_Speed.y = 4592;
-    m_TexturePlayer.loadFromFile("../graphics/king.png");
+    m_TexturePlayer.loadFromFile("graphics/king.png");
     
     m_SpritePlayer.setTexture(m_TexturePlayer);
     m_SpritePlayer.setPosition(m_Position);

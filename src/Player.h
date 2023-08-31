@@ -1,5 +1,4 @@
 #include <SFML/Graphics.hpp>
-#include "TextureHandler.h"
 using namespace sf;
 
 class Player

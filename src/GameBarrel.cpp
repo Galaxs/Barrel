@@ -1,8 +1,11 @@
 #include "GameBarrel.h"
+#include "Enemy.h"
 
 
-GameBarrel::GameBarrel() : m_NumEnemies(2000)
+GameBarrel::GameBarrel() : m_RenderWindow(sf::VideoMode(VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height), "Barrel!") //: m_NumEnemies(2000)
 {
+    TextureHolder textureHolder;
+
     init();
 }
 
@@ -10,28 +13,20 @@ GameBarrel::GameBarrel() : m_NumEnemies(2000)
 void GameBarrel::init()
 {
     m_Player = make_shared<Player>(m_RenderWindow);
-    m_RenderWindow.create(VideoMode(VideoMode::getDesktopMode().width, VideoMode::getDesktopMode().height), "Barrel!"); 
-    m_GroundPos = Vector2f(0.f, VideoMode::getDesktopMode().width - 200);
+    m_Enemy = make_shared<Enemy>(m_RenderWindow);
     
-    // for (int i = 0; i < m_NumEnemies; i++)
-    // {
-    //     m_Enemies[i] = make_shared<Enemy>(m_RenderWindow);
-    // }
-
-    // m_RenderWindow.setKeyRepeatEnabled(false);
-
-    // Enviroment 
     m_Enviroment.init(m_RenderWindow);
-
+    // m_Enemy->init(m_RenderWindow);
+    m_GroundPos = Vector2f(0.f, VideoMode::getDesktopMode().width - 200);
 }
 
 //  THE INPUT SECTION OF THE ENGINE  //
-bool GameBarrel::handleInput(RenderWindow& renderWindow, float dt)
+void GameBarrel::handleInput(RenderWindow& renderWindow, float dt)
 {
     // TO DO: CHANGE ALL OF THIS NESTED IF FOR A TIDY SWITCH
     if (Keyboard::isKeyPressed(Keyboard::Up))
     {   
-        m_Player->jump(m_Dt);
+        m_Player->jump(dt);
     }
     else {
 
@@ -50,7 +45,6 @@ bool GameBarrel::handleInput(RenderWindow& renderWindow, float dt)
             m_Player->setCanJump(false);
         }
     }
-    return false;
 }
 
 
@@ -60,21 +54,17 @@ void GameBarrel::draw(RenderWindow& rWindow)
     rWindow.draw(m_Player->getSprite());
     rWindow.draw(m_Enviroment.getVertexArray());
    // Draw the enemy
-    // for (int i = 0; i < m_NumEnemies; i++)
-    // {
-    //     m_Enemies[i]->draw(m_RenderWindow);
-    // }
+
+//    m_Enemy->draw(m_RenderWindow);       ///         WORKS !!!
+    rWindow.draw(m_Enemy->getSprite());     // WORKS!!!!!
+
     rWindow.display();
 }
 
 void GameBarrel::update()
 {
     m_Player->update(m_Dt, GameBarrel::GRAVITY);
-    // for(auto enemy : m_enemies)
-    // {
-    //     enemy->update(m_Dt);
-
-    // }
+    m_Enemy->update(m_Dt);
 }
 
 void GameBarrel::run()
@@ -86,8 +76,5 @@ void GameBarrel::run()
         handleInput(m_RenderWindow, m_Dt);
         update();
         draw(m_RenderWindow);
-
-
-
     }
 }
